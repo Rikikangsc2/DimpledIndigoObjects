@@ -8,7 +8,7 @@ app.get('/yt-mp3', async (req, res) => {
         return res.status(400).send('URL tidak valid');
     }
     let info = await ytdl.getInfo(url);
-    let format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
+    let format = ytdl.chooseFormat(info.formats, { filter: 'audioonly' });
     res.header('Content-Disposition', `attachment; filename="audio.mp3"`);
     res.setHeader('Content-Type', 'audio/mpeg');
     ytdl(url, { format: format }).pipe(res);
@@ -20,7 +20,7 @@ app.get('/yt-mp4', async (req, res) => {
         return res.status(400).send('URL tidak valid');
     }
     let info = await ytdl.getInfo(url);
-    let format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
+    let format = ytdl.chooseFormat(info.formats, { filter: 'videoonaudio' });
     res.header('Content-Disposition', `attachment; filename="video.mp4"`);
     res.setHeader('Content-Type', 'video/mp4');
     ytdl(url, { format: format }).pipe(res);
